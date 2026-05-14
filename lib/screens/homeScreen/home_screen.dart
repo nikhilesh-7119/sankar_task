@@ -60,61 +60,45 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-
         title: const Text('Home'),
 
         actions: [
-
           IconButton(
-
             onPressed: () async {
-
               await authController.signOut();
 
               Get.offAll(AuthGateway());
             },
 
             icon: const Icon(Icons.logout),
-          )
+          ),
         ],
       ),
       // FloatingActionButton kept exactly as requested
-     body: Padding(
-
+      body: Padding(
         padding: const EdgeInsets.all(16),
 
         child: Column(
-
           children: [
-
             Expanded(
-
               flex: 7,
 
               child: Container(
-
                 padding: const EdgeInsets.all(16),
 
                 decoration: BoxDecoration(
-
                   color: Colors.white,
 
                   borderRadius: BorderRadius.circular(16),
                 ),
 
                 child: Column(
-
                   children: [
-
                     Row(
-
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                       children: [
-
                         const Text(
-
                           'Tasks',
 
                           style: TextStyle(
@@ -124,9 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
 
                         IconButton(
-
                           onPressed: () {
-
                             taskController.clearFields();
 
                             openTaskDialog();
@@ -137,19 +119,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 12),
-
                     Expanded(
-
                       child: StreamBuilder(
-
                         stream: taskController.getTasks(),
 
                         builder: (context, snapshot) {
-
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
@@ -157,36 +133,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           if (!snapshot.hasData ||
                               snapshot.data!.docs.isEmpty) {
-
-                            return const Center(
-                              child: Text('No Tasks Found'),
-                            );
+                            return const Center(child: Text('No Tasks Found'));
                           }
 
                           final tasks = snapshot.data!.docs;
 
                           return ListView.builder(
-
                             itemCount: tasks.length,
 
                             itemBuilder: (context, index) {
-
                               final task = TaskModel.fromJson(
                                 tasks[index].data(),
                               );
 
                               return TaskTile(
-
                                 task: task,
 
                                 onEdit: () async {
-
                                   await taskController.editTask(task.id);
 
-                                  openTaskDialog(
-                                    taskId: task.id,
-                                    isEdit: true,
-                                  );
+                                  openTaskDialog(taskId: task.id, isEdit: true);
                                 },
                               );
                             },
@@ -201,10 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 16),
 
-            const Expanded(
-              flex: 3,
-              child: QuoteCard(),
-            ),
+            const Expanded(flex: 3, child: QuoteCard()),
           ],
         ),
       ),

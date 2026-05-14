@@ -11,7 +11,6 @@ class SplashScreen extends StatelessWidget {
   static const Color kText = Color(0xFF1B1B1B);
   static const Color kMuted = Color(0xFF6B6B6B);
 
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

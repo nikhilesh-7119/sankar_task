@@ -121,7 +121,7 @@ class TaskController extends GetxController {
         .collection('users')
         .doc(auth.currentUser!.uid)
         .collection('tasks')
-        .orderBy('lastDateText', descending: true)
+        .orderBy('lastDateText', descending: false)
         .snapshots();
   }
 }

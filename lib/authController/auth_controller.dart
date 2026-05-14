@@ -29,7 +29,7 @@ class AuthController extends GetxController {
     super.dispose();
   }
 
-  initUser() async {
+  Future<void> initUser() async {
     var newUser = UserModel(
       id: auth.currentUser!.uid,
       email: signEmail.text,

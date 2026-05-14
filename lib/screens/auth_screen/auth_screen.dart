@@ -15,15 +15,6 @@ class _AuthScreenState extends State<AuthScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tab;
 
-  // Controllers owned here and passed down
-  // final loginEmail = TextEditingController();
-  // final loginPassword = TextEditingController();
-
-  // final signName = TextEditingController();
-  // final signEmail = TextEditingController();
-  // final signPassword = TextEditingController();
-  // final signConfirm = TextEditingController();
-
   final _loginKey = GlobalKey<FormState>();
   final _signKey = GlobalKey<FormState>();
 
@@ -41,12 +32,6 @@ class _AuthScreenState extends State<AuthScreen>
   @override
   void dispose() {
     _tab.dispose();
-    // loginEmail.dispose();
-    // loginPassword.dispose();
-    // signName.dispose();
-    // signEmail.dispose();
-    // signPassword.dispose();
-    // signConfirm.dispose();
     super.dispose();
   }
 
@@ -66,153 +51,151 @@ class _AuthScreenState extends State<AuthScreen>
 
     return Scaffold(
       backgroundColor: bg,
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 50,),
-              Center(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 20 * s, vertical: 24 * s),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: double.infinity),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(height: 12 * s),
-                            Text(
-                              'Welcome',
-                              style: Theme.of(context).textTheme.headlineSmall
-                                  ?.copyWith(
-                                    fontSize: 26 * s,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 50,),
+            Center(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20 * s, vertical: 24 * s),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: double.infinity),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(height: 12 * s),
+                          Text(
+                            'Welcome',
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
+                                  fontSize: 26 * s,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          SizedBox(height: 6 * s),
+                          Text(
+                            'Sign in to plan your dream scheduler',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: const Color.fromARGB(255, 31, 31, 31),
+                              fontSize: 16 * s,
+                              fontWeight: FontWeight.w400,
                             ),
-                            SizedBox(height: 6 * s),
-                            Text(
-                              'Sign in to plan your dream wedding',
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: const Color.fromARGB(255, 31, 31, 31),
-                                fontSize: 16 * s,
-                                fontWeight: FontWeight.w400,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 48 * s),
+            
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(16 * s),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8 * s,
+                          vertical: 4 * s,
+                        ),
+                        child: TabBar(
+                          controller: _tab,
+                          indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20 * s),
+                          ),
+                          labelColor: const Color.fromARGB(255, 233, 105, 105),
+                          unselectedLabelColor: const Color.fromARGB(
+                            255,
+                            60,
+                            60,
+                            60,
+                          ),
+                          tabs: [
+                            Tab(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 6 * s),
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(fontSize: 16 * s),
+                                ),
                               ),
-                              textAlign: TextAlign.center,
+                            ),
+                            Tab(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 6 * s),
+                                child: Text(
+                                  'Sign Up',
+                                  style: TextStyle(fontSize: 16 * s),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 48 * s),
-              
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.4),
-                            borderRadius: BorderRadius.circular(16 * s),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8 * s,
-                            vertical: 4 * s,
-                          ),
-                          child: TabBar(
-                            controller: _tab,
-                            indicator: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20 * s),
+                      ),
+            
+                      SizedBox(height: 16 * s),
+            
+                      // Card container with bounded TabBarView height to avoid layout errors
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: cardColor,
+                          borderRadius: BorderRadius.circular(16 * s),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
                             ),
-                            labelColor: const Color.fromARGB(255, 233, 105, 105),
-                            unselectedLabelColor: const Color.fromARGB(
-                              255,
-                              60,
-                              60,
-                              60,
-                            ),
-                            tabs: [
-                              Tab(
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 6 * s),
-                                  child: Text(
-                                    'Login',
-                                    style: TextStyle(fontSize: 16 * s),
-                                  ),
+                          ],
+                        ),
+                        padding: EdgeInsets.all(16 * s),
+                        child: SingleChildScrollView(
+                          child: SizedBox(
+                            height:
+                                (_tab.index == 0 ? 350 : 350) *
+                                s, // prevents RenderViewport error
+                            child: TabBarView(
+                              controller: _tab,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: [
+                                SignInForm(
+                                  formKey: _loginKey,
+                                  inputBorder: inputBorder,
+                                  fillColor: fillColor,
+                                  btnColor: btnColor,
+                                  scale: s,
                                 ),
-                              ),
-                              Tab(
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 6 * s),
-                                  child: Text(
-                                    'Sign Up',
-                                    style: TextStyle(fontSize: 16 * s),
-                                  ),
+                                SignUpForm(
+                                  formKey: _signKey,
+                                  inputBorder: inputBorder,
+                                  fillColor: fillColor,
+                                  btnColor: btnColor,
+                                  scale: s,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-              
-                        SizedBox(height: 16 * s),
-              
-                        // Card container with bounded TabBarView height to avoid layout errors
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: cardColor,
-                            borderRadius: BorderRadius.circular(16 * s),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 12,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
-                          ),
-                          padding: EdgeInsets.all(16 * s),
-                          child: SingleChildScrollView(
-                            child: SizedBox(
-                              height:
-                                  (_tab.index == 0 ? 300 : 300) *
-                                  s, // prevents RenderViewport error
-                              child: TabBarView(
-                                controller: _tab,
-                                physics: const NeverScrollableScrollPhysics(),
-                                children: [
-                                  SignInForm(
-                                    formKey: _loginKey,
-                                    inputBorder: inputBorder,
-                                    fillColor: fillColor,
-                                    btnColor: btnColor,
-                                    scale: s,
-                                  ),
-                                  SignUpForm(
-                                    formKey: _signKey,
-                                    inputBorder: inputBorder,
-                                    fillColor: fillColor,
-                                    btnColor: btnColor,
-                                    scale: s,
-                                  ),
-                                ],
-                              ),
+                              ],
                             ),
                           ),
                         ),
-              
-                        SizedBox(height: 14 * s),
-              
-                        SizedBox(height: 8 * s),
-                        Text(
-                          'Local data only. No backend required.',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: const Color(0xFF6B6B6B),
-                            fontSize: 13 * s,
-                          ),
-                          textAlign: TextAlign.center,
+                      ),
+            
+                      SizedBox(height: 14 * s),
+            
+                      SizedBox(height: 8 * s),
+                      Text(
+                        'Firestore data only. Directly connected.',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFF6B6B6B),
+                          fontSize: 13 * s,
                         ),
-                      ],
-                    ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

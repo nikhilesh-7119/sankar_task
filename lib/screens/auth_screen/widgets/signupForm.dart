@@ -40,7 +40,7 @@ class SignUpForm extends StatelessWidget {
             ),
             SizedBox(height: 6 * s),
             Text(
-              'Start planning your perfect\nwedding',
+              'Start planning your perfect\ndaily scheduler with us.',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: const Color(0xFF6B6B6B),
                 height: 1.3,
@@ -161,7 +161,6 @@ class SignUpForm extends StatelessWidget {
                     foregroundColor: Colors.black,
                   ),
                   onPressed: () async {
-                    // Left empty; will connect to Firebase later
                     await authController.createUser();
                     Get.offAll(AuthGateway());
                   },

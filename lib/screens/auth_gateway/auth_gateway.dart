@@ -1,7 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sankar_task/screens/auth_screen/auth_screen.dart';
 import 'package:sankar_task/screens/homeScreen/home_screen.dart';
 

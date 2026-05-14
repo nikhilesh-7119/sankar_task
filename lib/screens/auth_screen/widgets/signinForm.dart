@@ -115,7 +115,6 @@ class SignInForm extends StatelessWidget {
                     foregroundColor: Colors.black,
                   ),
                   onPressed: () async {
-                    // Left empty; will connect to Firebase later
                     await authController.loginUser();
                     Get.offAll(AuthGateway());
                   },

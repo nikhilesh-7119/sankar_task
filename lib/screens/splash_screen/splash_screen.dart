@@ -58,7 +58,7 @@ class SplashScreen extends StatelessWidget {
 
                       // title and subtitle
                       Text(
-                        'EverAfter',
+                        'TaskManager',
                         style: theme.textTheme.headlineMedium?.copyWith(
                           color: kText,
                           fontSize: 32 * s,
@@ -78,7 +78,7 @@ class SplashScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 20 * s),
                       Text(
-                        'Your perfect wedding, beautifully\nplanned and effortlessly managed',
+                        'Your perfect schedule, beautifully\nplanned and effortlessly managed',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: const Color.fromARGB(255, 59, 59, 59),
                           height: 1.4,
@@ -172,55 +172,6 @@ class _NeumorphicButton extends StatefulWidget {
 
 class _NeumorphicButtonState extends State<_NeumorphicButton> {
   bool _pressed = false;
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Listener(
-  //     onPointerDown: (_) => setState(() => _pressed = true),
-  //     onPointerUp: (_) => setState(() => _pressed = false),
-  //     child: GestureDetector(
-  //       onTap: widget.onTap,
-  //       child: AnimatedContainer(
-  //         duration: const Duration(milliseconds: 150),
-  //         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-  //         decoration: BoxDecoration(
-  //           color: SplashScreen.kCard,
-  //           borderRadius: BorderRadius.circular(14),
-  //           boxShadow: _pressed
-  //               ? [
-  //                   // pressed (inner) look by reducing elevation
-  //                   BoxShadow(
-  //                     color: const Color.fromARGB(255, 248, 134, 134),
-  //                     blurRadius: 4,
-  //                     offset: const Offset(0, 2),
-  //                   ),
-  //                 ]
-  //               : [
-  //                   BoxShadow(
-  //                     color: const Color.fromARGB(255, 248, 134, 134),
-  //                     blurRadius: 16,
-  //                     spreadRadius: 1,
-  //                     offset: const Offset(0, 6),
-  //                   ),
-  //                   const BoxShadow(
-  //                     color: Colors.white,
-  //                     blurRadius: 12,
-  //                     offset: Offset(-2, -2),
-  //                   ),
-  //                 ],
-  //         ),
-  //         child: Text(
-  //           widget.label,
-  //           style: Theme.of(context).textTheme.labelLarge?.copyWith(
-  //             color: SplashScreen.kText,
-  //             fontSize: 20,
-  //             fontWeight: FontWeight.w600,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

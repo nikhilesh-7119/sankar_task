@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 import 'package:sankar_task/controller/auth_controller.dart';
 import 'package:sankar_task/controller/qoute_controller.dart';
 import 'package:sankar_task/controller/task_controller.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final taskController = Get.put(TaskController());
   final quoteController = Get.put(QuoteController());
 
-  String _displayName = 'Guest';
+  String _displayName = AppConstants.guest;
   bool _loading = true;
 
   @override
@@ -40,16 +41,20 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final uid = _auth.currentUser?.uid;
       if (uid != null) {
-        final doc = await _db.collection('users').doc(uid).get();
+        final doc = await _db
+            .collection(AppConstants.usersCollection)
+            .doc(uid)
+            .get();
         final data = doc.data();
         if (data != null &&
-            (data['name'] as String?)?.trim().isNotEmpty == true) {
-          _displayName = (data['name'] as String).trim();
+            (data[AppConstants.fieldName] as String?)?.trim().isNotEmpty ==
+                true) {
+          _displayName = (data[AppConstants.fieldName] as String).trim();
         }
       }
     } catch (e) {
       // ignore and keep Guest
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(AppConstants.errorTitle, e.toString());
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -60,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text(AppConstants.homeTitle),
 
         actions: [
           IconButton(
@@ -87,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(16),
 
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
 
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -99,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       children: [
                         const Text(
-                          'Tasks',
+                          AppConstants.tasksHeading,
 
                           style: TextStyle(
                             fontSize: 22,
@@ -133,7 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           if (!snapshot.hasData ||
                               snapshot.data!.docs.isEmpty) {
-                            return const Center(child: Text('No Tasks Found'));
+                            return const Center(
+                              child: Text(AppConstants.noTasksFound),
+                            );
                           }
 
                           final tasks = snapshot.data!.docs;

@@ -1,3 +1,5 @@
+import 'package:sankar_task/constants/app_constants.dart';
+
 class QuoteModel {
 
   final String content;
@@ -11,8 +13,8 @@ class QuoteModel {
   factory QuoteModel.fromJson(Map<String, dynamic> json) {
 
     return QuoteModel(
-      content: json['content'],
-      author: json['author'],
+      content: json[AppConstants.fieldContent],
+      author: json[AppConstants.fieldAuthor],
     );
   }
 }

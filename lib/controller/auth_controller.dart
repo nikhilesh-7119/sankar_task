@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 import 'package:sankar_task/models/user_model.dart';
 import 'package:sankar_task/screens/auth_gateway/auth_gateway.dart';
 
@@ -38,11 +39,11 @@ class AuthController extends GetxController {
     );
     try {
       await db
-          .collection('users')
+          .collection(AppConstants.usersCollection)
           .doc(auth.currentUser!.uid)
           .set(newUser.toJson());
     } catch (e) {
-      Get.snackbar('Error in firebase', e.toString());
+      Get.snackbar(AppConstants.errorInFirebase, e.toString());
     }
   }
 
@@ -53,9 +54,9 @@ class AuthController extends GetxController {
         email: loginEmail.text,
         password: loginPassword.text,
       );
-      Get.snackbar('User logged in', 'Successful');
+      Get.snackbar(AppConstants.userLoggedIn, AppConstants.successful);
     } catch (e) {
-      Get.snackbar('Error in login', e.toString());
+      Get.snackbar(AppConstants.errorInLogin, e.toString());
     }
     isLoading.value = false;
   }
@@ -64,7 +65,10 @@ class AuthController extends GetxController {
     isLoading.value = true;
     try {
       if (signConfirm.text != signPassword.text) {
-        Get.snackbar('Password Mismatch', 'Both passwords are different');
+        Get.snackbar(
+          AppConstants.passwordMismatchTitle,
+          AppConstants.passwordMismatchMsg,
+        );
         isLoading.value = false;
         return;
       }
@@ -73,26 +77,27 @@ class AuthController extends GetxController {
         password: signPassword.text,
       );
       await initUser();
-      Get.snackbar('User Created', 'Successful');
+      Get.snackbar(AppConstants.userCreated, AppConstants.successful);
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(AppConstants.errorTitle, e.toString());
     }
     isLoading.value = false;
   }
 
   Future<void> signOut() async {
     await auth.signOut();
-    Get.snackbar('User logged out', 'Successful');
+    Get.snackbar(AppConstants.userLoggedOut, AppConstants.successful);
     Get.offAll(AuthGateway());
   }
 
   Future<UserModel?> fetchCurrentUser() async {
     final user = auth.currentUser;
     if (user == null) return null;
-    final doc = await db.collection('users').doc(user.uid).get();
+    final doc =
+        await db.collection(AppConstants.usersCollection).doc(user.uid).get();
     if (!doc.exists || doc.data() == null) return null;
     final data = doc.data()!;
-    data['id'] = doc.id; // ensure id filled
+    data[AppConstants.fieldId] = doc.id; // ensure id filled
     return UserModel.fromJson(data);
   }
 }

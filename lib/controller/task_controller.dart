@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 import 'package:sankar_task/models/task_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -33,10 +34,18 @@ class TaskController extends GetxController {
     final taskId=uuid.v4();
     var task=TaskModel(id: taskId, title: title.text.trim(), description: description.text.trim(), lastDateText: DateTime.now().toString().split(' ')[0], completed: completed.value);
     try{
-      await db.collection('users').doc(userId).collection('tasks').doc(taskId).set(task.toJson());
+      await db
+          .collection(AppConstants.usersCollection)
+          .doc(userId)
+          .collection(AppConstants.tasksCollection)
+          .doc(taskId)
+          .set(task.toJson());
       clearFields();
     } catch (e) {
-      Get.snackbar('Error in Adding task',"please check your internet");
+      Get.snackbar(
+        AppConstants.errorAddingTaskTitle,
+        AppConstants.errorAddingTaskMsg,
+      );
     }
   }
 
@@ -45,9 +54,9 @@ class TaskController extends GetxController {
     try {
 
       final taskDoc = await db
-          .collection('users')
+          .collection(AppConstants.usersCollection)
           .doc(auth.currentUser!.uid)
-          .collection('tasks')
+          .collection(AppConstants.tasksCollection)
           .doc(id)
           .get();
 
@@ -65,8 +74,8 @@ class TaskController extends GetxController {
     } catch (e) {
 
       Get.snackbar(
-        "Error",
-        "Unable to fetch task",
+        AppConstants.errorTitle,
+        AppConstants.unableToFetchTask,
       );
     }
   }
@@ -76,41 +85,46 @@ class TaskController extends GetxController {
     try {
 
       await db
-          .collection('users')
+          .collection(AppConstants.usersCollection)
           .doc(auth.currentUser!.uid)
-          .collection('tasks')
+          .collection(AppConstants.tasksCollection)
           .doc(id)
           .update({
 
-        'title': title.text.trim(),
-        'description': description.text.trim(),
-        'completed': completed.value,
+        AppConstants.fieldTitle: title.text.trim(),
+        AppConstants.fieldDescription: description.text.trim(),
+        AppConstants.fieldCompleted: completed.value,
 
       });
 
       clearFields();
 
       Get.snackbar(
-        "Success",
-        "Task Updated",
+        AppConstants.successTitle,
+        AppConstants.taskUpdated,
       );
 
     } catch (e) {
 
       Get.snackbar(
-        "Error",
-        "Unable to update task",
+        AppConstants.errorTitle,
+        AppConstants.unableToUpdateTask,
       );
     }
   }
 
   Future<void> deleteTask(String id) async {
     try{
-      await db.collection('users').doc(auth.currentUser!.uid).collection('tasks').doc(id).delete();
+      await db
+          .collection(AppConstants.usersCollection)
+          .doc(auth.currentUser!.uid)
+          .collection(AppConstants.tasksCollection)
+          .doc(id)
+          .delete();
     } catch (e){
       Get.snackbar(
-        "Error",
-        "Unable to delete task",
+        AppConstants.errorTitle,
+        AppConstants.unableToDeleteTask,
       );
     }
   }
@@ -118,10 +132,10 @@ class TaskController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> getTasks() {
 
     return db
-        .collection('users')
+        .collection(AppConstants.usersCollection)
         .doc(auth.currentUser!.uid)
-        .collection('tasks')
-        .orderBy('lastDateText', descending: false)
+        .collection(AppConstants.tasksCollection)
+        .orderBy(AppConstants.fieldLastDateText, descending: false)
         .snapshots();
   }
 }

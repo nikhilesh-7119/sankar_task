@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 import 'package:sankar_task/controller/auth_controller.dart';
 import 'package:sankar_task/screens/auth_gateway/auth_gateway.dart';
 import 'package:sankar_task/screens/auth_screen/widgets/passwordField.dart';
+import 'package:sankar_task/theme/app_Colors.dart';
 
 class SignInForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -32,7 +34,7 @@ class SignInForm extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Sign in to your account',
+              AppConstants.signInHeading,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
                 fontSize: 16 * s,
@@ -40,9 +42,9 @@ class SignInForm extends StatelessWidget {
             ),
             SizedBox(height: 6 * s),
             Text(
-              'Enter your email and password to\ncontinue',
+              AppConstants.signInSubheading,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: const Color(0xFF6B6B6B),
+                color: AppColors.mutedGrey,
                 height: 1.3,
                 fontSize: 13 * s,
               ),
@@ -50,7 +52,7 @@ class SignInForm extends StatelessWidget {
             SizedBox(height: 16 * s),
 
             Text(
-              'Email',
+              AppConstants.emailLabel,
               style: Theme.of(
                 context,
               ).textTheme.labelLarge?.copyWith(fontSize: 14 * s),
@@ -60,7 +62,7 @@ class SignInForm extends StatelessWidget {
               controller: authController.loginEmail,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                hintText: 'your@email.com',
+                hintText: AppConstants.emailHint,
                 filled: true,
                 fillColor: fillColor,
                 contentPadding: EdgeInsets.symmetric(
@@ -71,22 +73,22 @@ class SignInForm extends StatelessWidget {
                 enabledBorder: inputBorder,
                 focusedBorder: inputBorder.copyWith(
                   borderSide: BorderSide(
-                    color: Colors.black12.withOpacity(0.25),
+                    color: AppColors.black12Op25,
                   ),
                 ),
               ),
               validator: (v) {
-                if (v == null || v.trim().isEmpty) return 'Email required';
-                final ok = RegExp(
-                  r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-                ).hasMatch(v.trim());
-                return ok ? null : 'Invalid email';
+                if (v == null || v.trim().isEmpty) {
+                  return AppConstants.emailRequired;
+                }
+                final ok = RegExp(AppConstants.emailRegex).hasMatch(v.trim());
+                return ok ? null : AppConstants.invalidEmail;
               },
             ),
             SizedBox(height: 12 * s),
 
             Text(
-              'Password',
+              AppConstants.passwordLabel,
               style: Theme.of(
                 context,
               ).textTheme.labelLarge?.copyWith(fontSize: 14 * s),
@@ -94,7 +96,7 @@ class SignInForm extends StatelessWidget {
             SizedBox(height: 6 * s),
             PasswordField(
               controller: authController.loginPassword,
-              hint: '••••••••',
+              hint: AppConstants.passwordHint,
               inputBorder: inputBorder,
               fillColor: fillColor,
               s: s,
@@ -112,7 +114,7 @@ class SignInForm extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14 * s),
                     ),
-                    foregroundColor: Colors.black,
+                    foregroundColor: AppColors.black,
                   ),
                   onPressed: () async {
                     await authController.loginUser();
@@ -121,7 +123,7 @@ class SignInForm extends StatelessWidget {
                   child: authController.isLoading.value
                       ? Center(child: CircularProgressIndicator())
                       : Text(
-                          'Continue',
+                          AppConstants.continueLabel,
                           style: TextStyle(
                             fontSize: 16 * s,
                             fontWeight: FontWeight.w600,

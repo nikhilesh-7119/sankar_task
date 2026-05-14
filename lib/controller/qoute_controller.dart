@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:sankar_task/constants/app_constants.dart';
 
 import '../models/quote_model.dart';
 
@@ -21,7 +22,7 @@ class QuoteController extends GetxController {
       isLoading.value = true;
 
       final response = await http.get(
-        Uri.parse('http://api.quotable.io/random'),
+        Uri.parse(AppConstants.quoteApiUrl),
       );
 
       if (response.statusCode == 200) {
@@ -30,7 +31,7 @@ class QuoteController extends GetxController {
         quote.value = QuoteModel.fromJson(data);
       }
     } catch (e) {
-      Get.snackbar('Error', 'Unable to fetch quote');
+      Get.snackbar(AppConstants.errorTitle, AppConstants.unableToFetchQuote);
       print(e.toString());
     } finally {
       isLoading.value = false;

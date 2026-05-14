@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 import 'package:sankar_task/controller/auth_controller.dart';
 import 'package:sankar_task/screens/auth_screen/widgets/signinForm.dart';
 import 'package:sankar_task/screens/auth_screen/widgets/signupForm.dart';
+import 'package:sankar_task/theme/app_Colors.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -17,9 +19,6 @@ class _AuthScreenState extends State<AuthScreen>
 
   final _loginKey = GlobalKey<FormState>();
   final _signKey = GlobalKey<FormState>();
-
-  static const bg = Color.fromARGB(255, 236, 233, 233);
-  static const btnBase = Color.fromARGB(255, 240, 143, 143);
 
   final AuthController authController = Get.put(AuthController());
 
@@ -42,15 +41,15 @@ class _AuthScreenState extends State<AuthScreen>
 
     final inputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(16 * s),
-      borderSide: BorderSide(color: Colors.black12.withOpacity(0.15)),
+      borderSide: BorderSide(color: AppColors.black12Op15),
     );
 
-    final fillColor = Colors.white.withOpacity(0.7);
-    final cardColor = Colors.white.withOpacity(0.6);
-    final btnColor = btnBase.withOpacity(0.25);
+    final fillColor = AppColors.whiteOp7;
+    final cardColor = AppColors.whiteOp6;
+    final btnColor = AppColors.accentOp25;
 
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: AppColors.bg,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +67,7 @@ class _AuthScreenState extends State<AuthScreen>
                         children: [
                           SizedBox(height: 12 * s),
                           Text(
-                            'Welcome',
+                            AppConstants.welcomeHeading,
                             style: Theme.of(context).textTheme.headlineSmall
                                 ?.copyWith(
                                   fontSize: 26 * s,
@@ -77,9 +76,9 @@ class _AuthScreenState extends State<AuthScreen>
                           ),
                           SizedBox(height: 6 * s),
                           Text(
-                            'Sign in to plan your dream scheduler',
+                            AppConstants.welcomeSubtitle,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: const Color.fromARGB(255, 31, 31, 31),
+                              color: AppColors.welcomeSubtitle,
                               fontSize: 16 * s,
                               fontWeight: FontWeight.w400,
                             ),
@@ -88,10 +87,10 @@ class _AuthScreenState extends State<AuthScreen>
                         ],
                       ),
                       SizedBox(height: 48 * s),
-            
+
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.4),
+                          color: AppColors.whiteOp4,
                           borderRadius: BorderRadius.circular(16 * s),
                         ),
                         padding: EdgeInsets.symmetric(
@@ -103,19 +102,14 @@ class _AuthScreenState extends State<AuthScreen>
                           indicator: BoxDecoration(
                             borderRadius: BorderRadius.circular(20 * s),
                           ),
-                          labelColor: const Color.fromARGB(255, 233, 105, 105),
-                          unselectedLabelColor: const Color.fromARGB(
-                            255,
-                            60,
-                            60,
-                            60,
-                          ),
+                          labelColor: AppColors.tabLabelPink,
+                          unselectedLabelColor: AppColors.tabUnselectedGrey,
                           tabs: [
                             Tab(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 6 * s),
                                 child: Text(
-                                  'Login',
+                                  AppConstants.loginTabLabel,
                                   style: TextStyle(fontSize: 16 * s),
                                 ),
                               ),
@@ -124,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen>
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 6 * s),
                                 child: Text(
-                                  'Sign Up',
+                                  AppConstants.signupTabLabel,
                                   style: TextStyle(fontSize: 16 * s),
                                 ),
                               ),
@@ -132,9 +126,9 @@ class _AuthScreenState extends State<AuthScreen>
                           ],
                         ),
                       ),
-            
+
                       SizedBox(height: 16 * s),
-            
+
                       // Card container with bounded TabBarView height to avoid layout errors
                       Container(
                         width: double.infinity,
@@ -143,7 +137,7 @@ class _AuthScreenState extends State<AuthScreen>
                           borderRadius: BorderRadius.circular(16 * s),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
+                              color: AppColors.blackOp05,
                               blurRadius: 12,
                               offset: const Offset(0, 6),
                             ),
@@ -178,14 +172,14 @@ class _AuthScreenState extends State<AuthScreen>
                           ),
                         ),
                       ),
-            
+
                       SizedBox(height: 14 * s),
-            
+
                       SizedBox(height: 8 * s),
                       Text(
-                        'Firestore data only. Directly connected.',
+                        AppConstants.firestoreNoticeText,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: const Color(0xFF6B6B6B),
+                          color: AppColors.mutedGrey,
                           fontSize: 13 * s,
                         ),
                         textAlign: TextAlign.center,

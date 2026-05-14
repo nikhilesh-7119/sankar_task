@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sankar_task/constants/app_constants.dart';
+import 'package:sankar_task/theme/app_Colors.dart';
 
 class PasswordField extends StatefulWidget {
   final TextEditingController controller;
@@ -38,18 +40,19 @@ class _PasswordFieldState extends State<PasswordField> {
         border: widget.inputBorder,
         enabledBorder: widget.inputBorder,
         focusedBorder: widget.inputBorder.copyWith(
-          borderSide: BorderSide(color: Colors.black12.withOpacity(0.25)),
+          borderSide: BorderSide(color: AppColors.black12Op25),
         ),
         suffixIcon: IconButton(
           onPressed: () => setState(() => obscure = !obscure),
           icon: obscure == false
-              ? const Icon(Icons.visibility, color: Color(0xFF6B6B6B))
-              : const Icon(Icons.visibility_off, color: Color(0xFF6B6B6B)),
-          selectedIcon: const Icon(Icons.visibility, color: Color(0xFF6B6B6B)),
+              ? const Icon(Icons.visibility, color: AppColors.mutedGrey)
+              : const Icon(Icons.visibility_off, color: AppColors.mutedGrey),
+          selectedIcon: const Icon(Icons.visibility, color: AppColors.mutedGrey),
           splashRadius: 18,
         ),
       ),
-      validator: (v) => (v == null || v.isEmpty) ? 'Password required' : null,
+      validator: (v) =>
+          (v == null || v.isEmpty) ? AppConstants.passwordRequired : null,
     );
   }
 }

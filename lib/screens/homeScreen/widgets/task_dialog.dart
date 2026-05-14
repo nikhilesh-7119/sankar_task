@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 
 import '../../../controller/task_controller.dart';
 
@@ -11,21 +12,21 @@ void openTaskDialog({String? taskId, bool isEdit = false}) {
 
     builder: (_) {
       return AlertDialog(
-        title: Text(isEdit ? 'Edit Task' : 'Add Task'),
+        title: Text(isEdit ? AppConstants.editTaskTitle : AppConstants.addTaskTitle),
 
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: controller.title,
-              decoration: const InputDecoration(hintText: 'Title'),
+              decoration: const InputDecoration(hintText: AppConstants.titleHint),
             ),
 
             const SizedBox(height: 12),
 
             TextField(
               controller: controller.description,
-              decoration: const InputDecoration(hintText: 'Description'),
+              decoration: const InputDecoration(hintText: AppConstants.descriptionHint),
             ),
 
             const SizedBox(height: 12),
@@ -38,7 +39,7 @@ void openTaskDialog({String? taskId, bool isEdit = false}) {
                   controller.completed.value = value!;
                 },
 
-                title: const Text('Completed'),
+                title: const Text(AppConstants.completedLabel),
               ),
             ),
           ],
@@ -52,7 +53,7 @@ void openTaskDialog({String? taskId, bool isEdit = false}) {
               Get.back();
             },
 
-            child: const Text('Cancel'),
+            child: const Text(AppConstants.cancelLabel),
           ),
 
           ElevatedButton(
@@ -66,7 +67,7 @@ void openTaskDialog({String? taskId, bool isEdit = false}) {
               }
             },
 
-            child: Text(isEdit ? 'Update' : 'Add'),
+            child: Text(isEdit ? AppConstants.updateLabel : AppConstants.addLabel),
           ),
         ],
       );

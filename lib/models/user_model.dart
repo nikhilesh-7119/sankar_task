@@ -1,3 +1,5 @@
+import 'package:sankar_task/constants/app_constants.dart';
+
 class UserModel {
   String? id;
   String? name;
@@ -12,18 +14,18 @@ class UserModel {
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    password = json['password'];
+    id = json[AppConstants.fieldId];
+    name = json[AppConstants.fieldName];
+    email = json[AppConstants.fieldEmail];
+    password = json[AppConstants.fieldPassword];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name'] = name;
-    _data['email'] = email;
-    _data['password']=password;
+    _data[AppConstants.fieldId] = id;
+    _data[AppConstants.fieldName] = name;
+    _data[AppConstants.fieldEmail] = email;
+    _data[AppConstants.fieldPassword] = password;
 
     return _data;
   }

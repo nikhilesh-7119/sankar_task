@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 import 'package:sankar_task/controller/qoute_controller.dart';
+import 'package:sankar_task/theme/app_Colors.dart';
 
 class QuoteCard extends StatelessWidget {
   const QuoteCard({super.key});
@@ -17,7 +19,7 @@ class QuoteCard extends StatelessWidget {
 
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: Colors.white,
+          color: AppColors.white,
         ),
 
         child: SingleChildScrollView(
@@ -29,7 +31,7 @@ class QuoteCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Motivational Quote',
+                    AppConstants.motivationalQuoteHeading,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
           

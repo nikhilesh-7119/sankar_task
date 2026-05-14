@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 import 'package:sankar_task/screens/auth_gateway/auth_gateway.dart';
+import 'package:sankar_task/theme/app_Colors.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  // Colors (match the mock)
-  static const Color kBg = Color.fromARGB(255, 236, 233, 233);
-  static const Color kCard = Color(0xFFFDF6F2);
-  static const Color kText = Color(0xFF1B1B1B);
-  static const Color kMuted = Color(0xFF6B6B6B);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +19,7 @@ class SplashScreen extends StatelessWidget {
     ); // guard extremes [1]
 
     return Scaffold(
-      backgroundColor: kBg,
+      backgroundColor: AppColors.bg,
       body: Stack(
         children: [
           // subtle decorative circles (scaled)
@@ -50,16 +46,16 @@ class SplashScreen extends StatelessWidget {
                       // heart icon
                       Icon(
                         Icons.favorite,
-                        color: const Color.fromARGB(255, 243, 163, 163),
+                        color: AppColors.heartPink,
                         size: 48 * s,
                       ),
                       SizedBox(height: 20 * s),
 
                       // title and subtitle
                       Text(
-                        'TaskManager',
+                        AppConstants.splashTitle,
                         style: theme.textTheme.headlineMedium?.copyWith(
-                          color: kText,
+                          color: AppColors.textDark,
                           fontSize: 32 * s,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1 * s,
@@ -68,18 +64,18 @@ class SplashScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 4 * s),
                       Text(
-                        'PLANNER',
+                        AppConstants.splashPlanner,
                         style: theme.textTheme.labelLarge?.copyWith(
-                          color: const Color.fromARGB(255, 59, 59, 59),
+                          color: AppColors.subtitleGrey,
                           letterSpacing: 2.2 * s,
                           fontSize: 20 * s,
                         ),
                       ),
                       SizedBox(height: 20 * s),
                       Text(
-                        'Your perfect schedule, beautifully\nplanned and effortlessly managed',
+                        AppConstants.splashTagline,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: const Color.fromARGB(255, 59, 59, 59),
+                          color: AppColors.subtitleGrey,
                           height: 1.4,
                           fontSize: 16 * s,
                         ),
@@ -89,7 +85,7 @@ class SplashScreen extends StatelessWidget {
 
                       // Get Started button (soft neumorphic)
                       _NeumorphicButton(
-                        label: 'Get Started',
+                        label: AppConstants.getStartedLabel,
                         onTap: () {
                           Get.offAll(const AuthGateway());
                         },
@@ -101,9 +97,9 @@ class SplashScreen extends StatelessWidget {
                       Opacity(
                         opacity: 0.9,
                         child: Text(
-                          'Version 1.0 • Made with ♡',
+                          AppConstants.splashFooter,
                           style: theme.textTheme.bodySmall?.copyWith(
-                            color: const Color.fromARGB(255, 41, 40, 40),
+                            color: AppColors.footerGrey,
                             fontSize: 15 * s,
                           ),
                           textAlign: TextAlign.center,
@@ -144,12 +140,12 @@ class _SoftCircle extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 240, 143, 143).withOpacity(0.25),
+          color: AppColors.softCirclePinkOp25,
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.black12.withOpacity(0.05)),
+          border: Border.all(color: AppColors.black12Op05),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: AppColors.blackOp03,
               blurRadius: 12,
               offset: const Offset(0, 6),
             ),
@@ -187,25 +183,25 @@ class _NeumorphicButtonState extends State<_NeumorphicButton> {
           duration: const Duration(milliseconds: 150),
           padding: EdgeInsets.symmetric(horizontal: 24 * s, vertical: 16 * s),
           decoration: BoxDecoration(
-            color: SplashScreen.kCard,
+            color: AppColors.cardCream,
             borderRadius: BorderRadius.circular(14 * s),
             boxShadow: _pressed
                 ? [
                     BoxShadow(
-                      color: const Color.fromARGB(255, 248, 134, 134),
+                      color: AppColors.buttonShadowPink,
                       blurRadius: 4 * s,
                       offset: Offset(0, 2 * s),
                     ),
                   ]
                 : [
                     BoxShadow(
-                      color: const Color.fromARGB(255, 248, 134, 134),
+                      color: AppColors.buttonShadowPink,
                       blurRadius: 16 * s,
                       spreadRadius: 1 * s,
                       offset: Offset(0, 6 * s),
                     ),
                     BoxShadow(
-                      color: Colors.white,
+                      color: AppColors.white,
                       blurRadius: 12 * s,
                       offset: Offset(-2 * s, -2 * s),
                     ),
@@ -214,7 +210,7 @@ class _NeumorphicButtonState extends State<_NeumorphicButton> {
           child: Text(
             widget.label,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: SplashScreen.kText,
+              color: AppColors.textDark,
               fontSize: 20 * s,
               fontWeight: FontWeight.w600,
             ),

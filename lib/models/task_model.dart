@@ -1,3 +1,5 @@
+import 'package:sankar_task/constants/app_constants.dart';
+
 class TaskModel {
 
   final String id;
@@ -16,21 +18,21 @@ class TaskModel {
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      lastDateText: json['lastDateText'],
-      completed: json['completed'],
+      id: json[AppConstants.fieldId],
+      title: json[AppConstants.fieldTitle],
+      description: json[AppConstants.fieldDescription],
+      lastDateText: json[AppConstants.fieldLastDateText],
+      completed: json[AppConstants.fieldCompleted],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'lastDateText': lastDateText,
-      'completed': completed,
+      AppConstants.fieldId: id,
+      AppConstants.fieldTitle: title,
+      AppConstants.fieldDescription: description,
+      AppConstants.fieldLastDateText: lastDateText,
+      AppConstants.fieldCompleted: completed,
     };
   }
 }

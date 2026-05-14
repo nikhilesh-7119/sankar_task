@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sankar_task/constants/app_constants.dart';
 
 import '../../../controller/task_controller.dart';
 import '../../../models/task_model.dart';
@@ -21,11 +22,11 @@ class TaskTile extends StatelessWidget {
 
           onChanged: (value) async {
             await taskController.db
-                .collection('users')
+                .collection(AppConstants.usersCollection)
                 .doc(taskController.auth.currentUser!.uid)
-                .collection('tasks')
+                .collection(AppConstants.tasksCollection)
                 .doc(task.id)
-                .update({'completed': value});
+                .update({AppConstants.fieldCompleted: value});
           },
         ),
 

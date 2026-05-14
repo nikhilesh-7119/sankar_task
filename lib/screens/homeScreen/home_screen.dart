@@ -2,8 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sankar_task/authController/auth_controller.dart';
+import 'package:sankar_task/controller/auth_controller.dart';
+import 'package:sankar_task/controller/qoute_controller.dart';
+import 'package:sankar_task/controller/task_controller.dart';
+import 'package:sankar_task/models/task_model.dart';
 import 'package:sankar_task/screens/auth_gateway/auth_gateway.dart';
+import 'package:sankar_task/screens/homeScreen/widgets/qoute_card.dart';
+import 'package:sankar_task/screens/homeScreen/widgets/task_dialog.dart';
+import 'package:sankar_task/screens/homeScreen/widgets/task_tile.dart';
 import 'package:sankar_task/theme/app_Colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final authController = Get.put(AuthController());
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
+
+  final taskController = Get.put(TaskController());
+  final quoteController = Get.put(QuoteController());
 
   String _displayName = 'Guest';
   bool _loading = true;
@@ -51,114 +60,154 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.bg,
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Icon(Icons.home, size: 28),
-        ),
-        leadingWidth: 30,
-        title: const Text(
-          'Home',
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
-        centerTitle: false,
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {}, // optional settings/menu
-        //     icon: const Icon(Icons.settings_outlined),
-        //   ),
-        // ],
+
+        title: const Text('Home'),
+
+        actions: [
+
+          IconButton(
+
+            onPressed: () async {
+
+              await authController.signOut();
+
+              Get.offAll(AuthGateway());
+            },
+
+            icon: const Icon(Icons.logout),
+          )
+        ],
       ),
       // FloatingActionButton kept exactly as requested
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.logout, size: 24),
-        onPressed: () async {
-          await authController.signOut();
-          Get.offAll(AuthGateway());
-        },
-      ),
-      body: const Center(
-        child: Text(
-          'Welcome to the Home Screen!',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+     body: Padding(
+
+        padding: const EdgeInsets.all(16),
+
+        child: Column(
+
+          children: [
+
+            Expanded(
+
+              flex: 7,
+
+              child: Container(
+
+                padding: const EdgeInsets.all(16),
+
+                decoration: BoxDecoration(
+
+                  color: Colors.white,
+
+                  borderRadius: BorderRadius.circular(16),
+                ),
+
+                child: Column(
+
+                  children: [
+
+                    Row(
+
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+
+                      children: [
+
+                        const Text(
+
+                          'Tasks',
+
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        IconButton(
+
+                          onPressed: () {
+
+                            taskController.clearFields();
+
+                            openTaskDialog();
+                          },
+
+                          icon: const Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    Expanded(
+
+                      child: StreamBuilder(
+
+                        stream: taskController.getTasks(),
+
+                        builder: (context, snapshot) {
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+
+                            return const Center(
+                              child: Text('No Tasks Found'),
+                            );
+                          }
+
+                          final tasks = snapshot.data!.docs;
+
+                          return ListView.builder(
+
+                            itemCount: tasks.length,
+
+                            itemBuilder: (context, index) {
+
+                              final task = TaskModel.fromJson(
+                                tasks[index].data(),
+                              );
+
+                              return TaskTile(
+
+                                task: task,
+
+                                onEdit: () async {
+
+                                  await taskController.editTask(task.id);
+
+                                  openTaskDialog(
+                                    taskId: task.id,
+                                    isEdit: true,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            const Expanded(
+              flex: 3,
+              child: QuoteCard(),
+            ),
+          ],
         ),
       ),
-      // body: _loading
-      //     ? const Center(child: CircularProgressIndicator())
-      //     : SingleChildScrollView(
-      //         padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: [
-      //             HomeHeader(name: _displayName),
-      //             const SizedBox(height: 8),
-
-      //             // Lottie banner from assets (offline)
-      //             FeatureCard(
-      //               icon: Icons.checklist_outlined,
-      //               title: 'Checklist',
-      //               subtitle: 'Track tasks and deadlines',
-      //               onPressed: () {
-      //                 Get.to(() => ChecklistScreen());
-      //               },
-      //             ),
-      //             const SizedBox(height: 10),
-      //             FeatureCard(
-      //               icon: Icons.location_on_outlined,
-      //               title: 'Venues',
-      //               subtitle: 'Browse and filter venues',
-      //               onPressed: () {
-      //                 Get.to(() => VenuesScreen());
-      //               },
-      //             ),
-      //             const SizedBox(height: 10),
-      //             FeatureCard(
-      //               icon: Icons.calculate_outlined,
-      //               title: 'Budget',
-      //               subtitle: 'Plan and adjust allocations',
-      //               onPressed: () {
-      //                 Get.to(() => BudgetCalculatorScreen());
-      //               },
-      //             ),
-      //             const SizedBox(height: 10),
-      //             FeatureCard(
-      //               icon: Icons.group_outlined,
-      //               title: 'Guests',
-      //               subtitle: 'Manage invitations and RSVPs',
-      //               onPressed: () {
-      //                 Get.to(() => GuestsScreen());
-      //               },
-      //             ),
-      //             const SizedBox(height: 12),
-      //             Container(
-      //               decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.circular(12)
-      //               ),
-      //               child: SizedBox(
-                      
-      //                 width: double.infinity,
-      //                 child: Lottie.asset(
-      //                   'lib/assets/images/animation.json',
-      //                   repeat: true,
-      //                   fit: BoxFit.contain,
-      //                   frameBuilder: (context, child, composition) {
-      //                     final ready = composition != null;
-      //                     return AnimatedSwitcher(
-      //                       duration: const Duration(milliseconds: 250),
-      //                       child: ready
-      //                           ? child
-      //                           : const Center(
-      //                               child: CircularProgressIndicator(),
-      //                             ),
-      //                     );
-      //                   },
-      //                 ),
-      //               ),
-      //             ),
-
-      //             const SizedBox(height: 24),
-      //           ],
-      //         ),
-      //       ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sankar_task/authController/auth_controller.dart';
+import 'package:sankar_task/controller/auth_controller.dart';
 import 'package:sankar_task/screens/auth_gateway/auth_gateway.dart';
 import 'package:sankar_task/screens/auth_screen/widgets/passwordField.dart';
 

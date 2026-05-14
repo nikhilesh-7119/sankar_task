@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sankar_task/authController/auth_controller.dart';
+import 'package:sankar_task/controller/auth_controller.dart';
 import 'package:sankar_task/screens/auth_screen/widgets/signinForm.dart';
 import 'package:sankar_task/screens/auth_screen/widgets/signupForm.dart';
 
